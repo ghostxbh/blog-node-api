@@ -4,7 +4,7 @@
 var express = require('express');
 var router = express.Router();
 
-router.use('/font', require('./font/index'));
-router.use('/admin', require('./admin/index'));
+router.use('/category', require('./category'));
+router.use('/type', require('./type'));
 
 module.exports = router;
