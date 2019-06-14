@@ -3,20 +3,20 @@
  */
 const Mysql = require('../util/mysql-util');
 const field = 'b_contents.id,b_contents.title,b_contents.introduction,' +
-    'b_contents.images,b_contents.source,b_contents.read_num as readNum,' +
+    'b_contents.images,b_contents.source,b_contents.content,b_contents.read_num as readNum,' +
     'b_contents.remark_num as remarkNum,b_contents.top,b_contents.recommend,' +
     'b_contents.update_time as updataTime,b_contents.create_time as createTime,' +
-    'b_contents.status,b_contents.type_id as typeId,b_contents.special_id as specialId,' +
+    'b_contents.status,b_contents.type_id as typeId,b_contents. special_id as specialId,' +
     'b_contents.labels,b_contents.admire_num as admireNum';
 module.exports = {
     //增
-    addContent(content) {
+    addContent(contents) {
         let addTime = new Date();
-        let {title, introduction, images, source, status, typeId, specialId, labels} = content;
+        let {title, introduction, images, source, content, status, typeId, specialId, labels} = contents;
         let sql = 'insert into b_contents (title,introduction,images,' +
-            'source,create_time,status,type_id,special_id,labels)' +
-            'values(?,?,?,?,?,?,?,?,?,?)';
-        return Mysql.excute(sql, [title, introduction, images, source, addTime, status, typeId, specialId, labels]);
+            'source,content,create_time,status,type_id,special_id,labels)' +
+            'values(?,?,?,?,?,?,?,?,?,?,?)';
+        return Mysql.excute(sql, [title, introduction, images, source, content, addTime, status, typeId, specialId, labels]);
     },
     //删
     delContent(id) {
@@ -24,13 +24,14 @@ module.exports = {
         return Mysql.transExcute(sql, [id]);
     },
     //改
-    modifyContent(content) {
-        let {id, title, introduction, images, source, top, recommend, status, typeId, specialId, labels} = content;
+    modifyContent(contents) {
+        let {id, title, introduction, images, source, content, top, recommend, status, typeId, specialId, labels} = contents;
         let set = '';
         if (title) set += `title='${title}',`;
         if (introduction) set += `introduction='${introduction}',`;
         if (images) set += `images='${images}',`;
         if (source) set += `source='${source}',`;
+        if (content) set += `content='${content}',`;
         if (top) set += `top=${top},`;
         if (recommend) set += `recommend=${recommend},`;
         if (status) set += `status=${status},`;
@@ -95,5 +96,12 @@ module.exports = {
         let sql = `select c.title,c.introduction,c.images,c.read_num as readNum,c.remark_num as remarkNum,s.name as specialName from b_contents c left join b_content_type ct on b_contents.type_id=ct.id ${where} ${order} ${limit}`;
         let count = `select count(*) as count from b_contents c ${where}`;
         return Mysql.excute(sql + count);
+    },
+    //最近评论文章10条
+    remarkList() {
+        let order = 'order by b.create_time desc';
+        let limit = 'limit 10';
+        let sql = `select c.title,c.images,c.create_time as createTime,c.read_num as readNum from b_contents c left join b_remark b on c.id=b.content_id ${order} ${limit}`;
+        return Mysql.excute(sql);
     },
 };

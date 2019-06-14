@@ -1,6 +1,6 @@
 {
   "name": "blog-node-api",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "start": "node bin/blog-node-api"
@@ -15,6 +15,21 @@
     "morgan": "~1.9.1",
     "mysql": "^2.17.1"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ghostxbh/blog-node-api.git"
+  },
+  "keywords": [
+    "nodejs",
+    "blog",
+    "express"
+  ],
+  "author": "Xu Benhao",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ghostxbh/blog-node-api/issues"
+  },
+  "homepage": "https://github.com/ghostxbh/blog-node-api#readme",
   "apidoc": {
     "title": "blog-node-api",
     "description": "博客后端接口文档",
