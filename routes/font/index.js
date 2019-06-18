@@ -4,7 +4,6 @@
 var express = require('express');
 var router = express.Router();
 
-router.use('/type', require('./type'));
-router.use('/category', require('./category'));
+router.use('/home', require('./home'));
 
 module.exports = router;

@@ -17,6 +17,7 @@ const contentsService = {
     remarkList(){
         return contentsDao.remarkList();
     },
+
 };
 
 module.exports = contentsService;
