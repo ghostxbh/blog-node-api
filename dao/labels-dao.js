@@ -30,8 +30,12 @@ module.exports = {
         return Mysql.transExcute(sql, [id]);
     },
     //查
-    labelList() {
-        let sql = `select ${field} from b_labels`;
+    labelList(orderSn, pageNum, pageSize) {
+        let order = '';
+        if (orderSn) order += 'order by num desc';
+        let limit = '';
+        if (pageNum && pageSize) limit += `limit ${(pageNum - 1) * pageSize},${pageSize}`;
+        let sql = `select ${field} from b_labels ${order} ${limit}`;
         return Mysql.excute(sql);
     },
 };

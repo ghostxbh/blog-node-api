@@ -59,7 +59,7 @@ module.exports = {
     },
     //详情
     content(id) {
-        let sql = `select ${field},ct.name as typeName,s.name as specialName from b_contents left join b_content_type ct on b_contents.type_id=ct.id left join b_special s on b_contents.special_id=s.id where b_contents.id=?`;
+        let sql = `select ${field},ct.name as typeName,s.name as specialName from b_contents left join b_type ct on b_contents.type_id=ct.id left join b_special s on b_contents.special_id=s.id where b_contents.id=?`;
         return Mysql.excute(sql, [id]);
     },
     //类别列表
@@ -76,7 +76,7 @@ module.exports = {
         let where = `where c.special_id=${specialId}`;
         let order = 'order by create_time desc';
         let limit = `limit ${(pageNum - 1) * pageSize},${pageSize}`;
-        let sql = `select c.title,c.introduction,c.images,c.read_num as readNum,c.remark_num as remarkNum,s.name as specialName from b_contents c left join b_content_type ct on b_contents.type_id=ct.id ${where} ${order} ${limit}`;
+        let sql = `select c.title,c.introduction,c.images,c.read_num as readNum,c.remark_num as remarkNum,s.name as specialName from b_contents c left join b_type ct on b_contents.type_id=ct.id ${where} ${order} ${limit}`;
         let count = `select count(*) as count from b_contents where special_id=${specialId}`;
         return Mysql.excute(sql + count);
     },
@@ -91,10 +91,12 @@ module.exports = {
         if (top) where += ` and top=${top}`;
         if (recommend) where += ` and recommend=${recommend}`;
         if (status) where += ` and status=${status}`;
-        let order = `order by ${orderSn} ${orderUd}`;
-        let limit = `limit ${(pageNum - 1) * pageSize},${pageSize}`;
-        let sql = `select c.title,c.introduction,c.images,c.read_num as readNum,c.remark_num as remarkNum,s.name as specialName from b_contents c left join b_content_type ct on b_contents.type_id=ct.id ${where} ${order} ${limit}`;
-        let count = `select count(*) as count from b_contents c ${where}`;
+        let order = '';
+        if (orderSn && orderUd) order += `order by c.${orderSn} ${orderUd}`;
+        let limit = '';
+        if (pageNum && pageSize) limit += `limit ${(pageNum - 1) * pageSize},${pageSize}`;
+        let sql = `select c.title,c.introduction,c.images,c.create_time as createTime,c.read_num as readNum,c.remark_num as remarkNum,t.name as typeName from b_contents c left join b_type t on c.type_id=t.id ${where} ${order} ${limit};`;
+        let count = `select count(*) as count from b_contents c ${where};`;
         return Mysql.excute(sql + count);
     },
     //最近评论文章10条

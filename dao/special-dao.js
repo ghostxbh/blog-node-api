@@ -48,6 +48,6 @@ module.exports = {
         let limit = '';
         if (pageNum && pageSize) limit += `limit ${(pageNum - 1) * pageSize},${pageSize}`;
         let sql = `select ${field} from b_special ${where} ${order} ${limit}`;
-        return Mysql.excute(sql, [status]);
+        return Mysql.excute(sql);
     },
 };
