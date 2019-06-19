@@ -34,7 +34,7 @@ router.get('/', function (req, res, next) {
 });
 
 /**
- * @api {get} /font/home/search 首页
+ * @api {get} /font/home/search 搜索
  * @apiGroup font-home
  * @apiVersion 1.0.0
  * @apiName search
