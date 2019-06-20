@@ -95,7 +95,7 @@ module.exports = {
         if (orderSn && orderUd) order += `order by c.${orderSn} ${orderUd}`;
         let limit = '';
         if (pageNum && pageSize) limit += `limit ${(pageNum - 1) * pageSize},${pageSize}`;
-        let sql = `select c.title,c.introduction,c.images,c.create_time as createTime,c.read_num as readNum,c.remark_num as remarkNum,t.name as typeName from b_contents c left join b_type t on c.type_id=t.id ${where} ${order} ${limit};`;
+        let sql = `select c.id,c.title,c.introduction,c.images,c.create_time as createTime,c.read_num as readNum,c.remark_num as remarkNum,t.name as typeName from b_contents c left join b_type t on c.type_id=t.id ${where} ${order} ${limit};`;
         let count = `select count(*) as count from b_contents c ${where};`;
         return Mysql.excute(sql + count);
     },
