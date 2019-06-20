@@ -16,8 +16,8 @@ const contentsService = {
             let [total] = await labelsDao.labelByName(labelList[i]);
             if (total.count < 1) {
                 labelsDao.addLabel(labelList[i]);
+                labelsDao.addNum(labelList[i]);
             }
-            labelsDao.addNum(labelList[i]);
         }
         //type+1
         typeDao.addContentNum(typeId);

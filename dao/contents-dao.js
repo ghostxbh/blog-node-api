@@ -15,7 +15,7 @@ module.exports = {
         let {title, introduction, images, source, content, status, typeId, specialId, labels} = contents;
         let sql = 'insert into b_contents (title,introduction,images,' +
             'source,content,create_time,status,type_id,special_id,labels)' +
-            'values(?,?,?,?,?,?,?,?,?,?,?)';
+            'values(?,?,?,?,?,?,?,?,?,?)';
         return Mysql.excute(sql, [title, introduction, images, source, content, addTime, status, typeId, specialId, labels]);
     },
     //删

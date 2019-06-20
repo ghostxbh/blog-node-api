@@ -45,8 +45,7 @@ module.exports = {
         return Mysql.excute(sql, [status]);
     },
     list(contentId, pageNum, pageSize) {
-        let where = 'where 1=1';
-        if (status) where += ` and status=1`;
+        let where = 'where status=1';
         if (contentId) where += ` and content_id=${contentId}`;
         let order = `order by create_time desc`;
         let limit = '';
