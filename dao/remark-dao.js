@@ -44,4 +44,15 @@ module.exports = {
         let sql = `select ${field} from b_remark ${where} ${order} ${limit}`;
         return Mysql.excute(sql, [status]);
     },
+    list(contentId, pageNum, pageSize) {
+        let where = 'where 1=1';
+        if (status) where += ` and status=1`;
+        if (contentId) where += ` and content_id=${contentId}`;
+        let order = `order by create_time desc`;
+        let limit = '';
+        if (pageNum && pageSize) limit += `limit ${(pageNum - 1) * pageSize},${pageSize}`;
+        let sql = `select ${field} from b_remark ${where} ${order} ${limit};`;
+        let csql = `select count(*) as count from b_remark ${where};`;
+        return Mysql.excute(sql + csql);
+    },
 };
