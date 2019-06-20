@@ -25,9 +25,14 @@ module.exports = {
         return Mysql.transExcute(sql);
     },
     //+1
-    addNum(id) {
-        let sql = `update b_labels set num=num+1 where id=?`;
-        return Mysql.transExcute(sql, [id]);
+    addNum(name) {
+        let sql = `update b_labels set num=num+1 where name=?`;
+        return Mysql.transExcute(sql, [name]);
+    },
+    //查数量
+    labelByName(name) {
+        let sql = `select count(*) as count from b_labels where name=?`;
+        return Mysql.excute(sql, [name]);
     },
     //查
     labelList(orderSn, pageNum, pageSize) {
