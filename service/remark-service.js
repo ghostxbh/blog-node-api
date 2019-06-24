@@ -10,6 +10,13 @@ module.exports = {
         contentDao.addRemarkNum(contentId);
         return remarkDao.addRemark(remark);
     },
+    del(id){
+        return remarkDao.delRemark(id);
+    },
+    modify(id,remark){
+        remark.id = id;
+        return remarkDao.modifyRemark(remark);
+    },
     list: async (contentdId, pageNum, pageSize) => {
         let result = {pageNum, pageSize};
         let [list, [total]] = await remarkDao.list(contentdId, pageNum, pageSize);
