@@ -26,15 +26,13 @@ const homeService = {
         let recommendList = contentDao.listByParam({recommend: 1, pageNum: 1, pageSize: 2});
         //文章列表（时间倒序）
         let contentList = contentDao.listByParam({orderSn: 'create_time', orderUd: 'desc', pageNum, pageSize});
-        //树形分类
-        let categoryList = categoryService.treeList();
-        let data = await Promise.all([remarkList, labelList, linksList, specialList, recommendList, contentList, categoryList]);
-        let [remarks, labels, linkses, specials, [recommends, [reTotal]], [contentArr, [cTotal]], categories] = data;
+        let data = await Promise.all([remarkList, labelList, linksList, specialList, recommendList, contentList]);
+        let [remarks, labels, linkses, specials, [recommends, [reTotal]], [contentArr, [cTotal]]] = data;
         let contents = {pageNum, pageSize};
         contents.list = contentArr;
         contents.total = cTotal.count;
         contents.totalPage = Math.ceil(cTotal.count / pageSize);
-        let result = {categories, recommends, contents, specials, remarks, labels, linkses};
+        let result = {recommends, contents, specials, remarks, labels, linkses};
         return Promise.resolve(result);
     },
     //搜索

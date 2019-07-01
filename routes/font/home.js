@@ -5,7 +5,7 @@ var express = require('express');
 var router = express.Router();
 const result = require('../../util/result-util');
 const homeService = require('../../service/home-service');
-
+const categoryService = require('../../service/category-service');
 /**
  * @api {get} /font/home 首页
  * @apiGroup font-home
@@ -28,6 +28,33 @@ const homeService = require('../../service/home-service');
  */
 router.get('/', function (req, res, next) {
     homeService.home().then(data => {
+        if (data) res.json(result.success(data));
+        else res.json(result.failed);
+    }).catch(e => res.json(result.exceptionFailed(e.message)));
+});
+
+/**
+ * @api {get} /font/home/category 分类
+ * @apiGroup font-home
+ * @apiVersion 1.0.0
+ * @apiName category
+ * @apiSuccessExample {json} Success-Response:
+ *  HTTP/1.1 200 OK
+ * {
+ *  "code": 200,
+ *  "message": "操作成功",
+ *  "data": 1
+ * }
+ * @apiErrorExample {json} Error-Response:
+ *  HTTP/1.1 500 error
+ * {
+ *  "code": 500,
+ *  "message": "操作失败",
+ * }
+ * @apiSampleRequest /font/home/category
+ */
+router.get('/category', function (req, res, next) {
+    categoryService.treeList().then(data => {
         if (data) res.json(result.success(data));
         else res.json(result.failed);
     }).catch(e => res.json(result.exceptionFailed(e.message)));
