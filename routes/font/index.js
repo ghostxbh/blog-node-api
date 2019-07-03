@@ -7,4 +7,6 @@ var router = express.Router();
 router.use('/home', require('./home'));
 router.use('/content', require('./content'));
 router.use('/remark', require('./remark'));
+router.use('/label', require('./labels'));
+
 module.exports = router;

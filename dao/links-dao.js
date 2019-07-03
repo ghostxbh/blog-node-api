@@ -2,7 +2,7 @@
  * Created by xbh 2019-06-12 友链CRUD
  */
 const Mysql = require('../util/mysql-util');
-let field = 'id,name,click_num,contact,remark,create_time';
+let field = 'id,name,url,click_num,contact,remark,create_time';
 module.exports = {
     //增
     addLink(link) {

@@ -61,6 +61,33 @@ router.get('/category', function (req, res, next) {
 });
 
 /**
+ * @api {get} /font/home/right 右侧
+ * @apiGroup font-home
+ * @apiVersion 1.0.0
+ * @apiName right
+ * @apiSuccessExample {json} Success-Response:
+ *  HTTP/1.1 200 OK
+ * {
+ *  "code": 200,
+ *  "message": "操作成功",
+ *  "data": 1
+ * }
+ * @apiErrorExample {json} Error-Response:
+ *  HTTP/1.1 500 error
+ * {
+ *  "code": 500,
+ *  "message": "操作失败",
+ * }
+ * @apiSampleRequest /font/home/right
+ */
+router.get('/right', function (req, res, next) {
+    homeService.rightSidebar().then(data => {
+        if (data) res.json(result.success(data));
+        else res.json(result.failed);
+    }).catch(e => res.json(result.exceptionFailed(e.message)));
+});
+
+/**
  * @api {get} /font/home/search 搜索
  * @apiGroup font-home
  * @apiVersion 1.0.0

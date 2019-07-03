@@ -40,6 +40,10 @@ module.exports = {
         let sql = `update b_special set read_num=read_num+1 where id=?`;
         return Mysql.transExcute(sql, [id]);
     },
+    special(id) {
+        let sql = `select ${field} from b_special where id=?`;
+        return Mysql.excute(sql, [id]);
+    },
     //列表
     specialList(keyword, pageNum, pageSize) {
         let where = 'where 1=1';

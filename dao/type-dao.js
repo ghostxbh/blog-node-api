@@ -30,12 +30,16 @@ module.exports = {
     //文章数+1
     addContentNum(id) {
         let sql = `update b_type set content_num=content_num+1 where id=?`;
-        return Mysql.transExcute(sql,[id]);
+        return Mysql.transExcute(sql, [id]);
     },
     //查
     typeList() {
         let sql = `select ${field} from b_type`;
         return Mysql.excute(sql);
+    },
+    typeInfo(id) {
+        let sql = `select ${field} from b_type where id=?`;
+        return Mysql.excute(sql, [id]);
     },
     //分类列表
     categoryList(categoryId) {

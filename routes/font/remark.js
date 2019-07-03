@@ -33,7 +33,7 @@ const remarkService = require('../../service/remark-service');
  */
 router.post('/create', function (req, res, next) {
     let remark = req.body;
-    remark.agent = req.headers.userAgent;
+    remark.agent = req.headers.userAgent || null;
     //TODO ip获取
     remark.ip = '';
     remarkService.add(remark).then(data => {
