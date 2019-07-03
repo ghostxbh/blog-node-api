@@ -34,6 +34,10 @@ module.exports = {
         let sql = `select count(*) as count from b_labels where name=?`;
         return Mysql.excute(sql, [name]);
     },
+    labelAll(){
+        let sql = `select ${field} from b_labels`;
+        return Mysql.excute(sql);
+    },
     //查
     labelList(orderSn, pageNum, pageSize) {
         let order = '';

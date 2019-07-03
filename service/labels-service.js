@@ -13,6 +13,9 @@ module.exports = {
         label.id = id;
         return labelsDao.modifyLabel(label);
     },
+    all(){
+        return labelsDao.labelAll();
+    },
     list(pageNum, pageSize) {
         return labelsDao.labelList('', pageNum, pageSize);
     },
