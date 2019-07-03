@@ -6,6 +6,7 @@ const remarkDao = require('../dao/remark-dao');
 const labelsDao = require('../dao/labels-dao');
 const specialDao = require('../dao/special-dao');
 const typeDao = require('../dao/type-dao');
+const dateFormat = require('../util/date-util');
 const contentsService = {
     //admin
     add: async (content) => {
@@ -39,27 +40,35 @@ const contentsService = {
     content: async (id) => {
         let contentInfo = contentsDao.content(id);
         let remarkList = remarkDao.remarkList(1, null, null, id, 1, 10);
-        let labelList = labelsDao.labelList();
-        let specialList = specialDao.specialList(null, 1, 5);
-        let [content, remarks, labels, specials] = await Promise.all([contentInfo, remarkList, labelList, specialList]);
+        let [[content], remarks] = await Promise.all([contentInfo, remarkList]);
         //content read +1
         contentsDao.addReadNum(id);
         //special read +1
         let specialId = content.specialId;
         if (specialId) specialDao.addRead(specialId);
-        let result = {content: content || {}, remarks: remarks || [], labels: labels || [], specials: specials || []};
+        content.createTime = dateFormat(content.createTime);
+        remarks.forEach(x => x.create_time = dateFormat(x.create_time, 1));
+        let result = {content: content || {}, remarks: remarks || []};
         return Promise.resolve(result);
     },
-    list: async (typeId, pageNum, pageSize) => {
-        let contentList = contentsDao.listByParam({typeId, pageNum, pageSize, status: 1});
-        let labelList = labelsDao.labelList();
-        let specialList = specialDao.specialList(null, 1, 5);
-        let [[contentArr, [total]], labels, specials] = await Promise.all([contentList, labelList, specialList]);
+    list: async (keyword, typeId, specialId, labels, pageNum, pageSize) => {
+        let content = contentsDao.listByParam({keyword, typeId, specialId, labels, pageNum, pageSize, status: 1});
+        let [[contentList, [total]]] = await Promise.all([content]);
         let contents = {pageNum, pageSize};
-        contents.list = contentArr;
+        contents.list = contentList;
         contents.total = total.count;
         contents.totalPage = Math.ceil(total.count / pageSize);
-        let result = {contents: contents || {}, labels: labels || [], specials: specials || []};
+        let result = {contents: contents};
+        if (keyword) result.title = keyword;
+        if (typeId) {
+            let [type] = await typeDao.typeInfo(typeId);
+            result.title = type.name;
+        }
+        if (specialId) {
+            let [special] = await specialDao.special(specialId);
+            result.title = special.name;
+        }
+        if (labels) result.title = labels;
         return Promise.resolve(result);
     },
     //点赞 +1

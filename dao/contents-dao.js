@@ -102,8 +102,8 @@ module.exports = {
     //最近评论文章10条
     remarkList() {
         let order = 'order by b.create_time desc';
-        let limit = 'limit 10';
-        let sql = `select c.title,c.images,c.create_time as createTime,c.read_num as readNum from b_contents c left join b_remark b on c.id=b.content_id ${order} ${limit}`;
+        let limit = 'limit 5';
+        let sql = `select c.id,c.title,c.images,c.create_time as createTime,c.read_num as readNum from b_contents c left join b_remark b on c.id=b.content_id ${order} ${limit}`;
         return Mysql.excute(sql);
     },
 };
