@@ -39,6 +39,7 @@ const homeService = {
         let specialList = specialDao.specialList(null, 1, 5);
         let [remarks, labels, links, specials] = await Promise.all([remarkList, labelList, linksList, specialList]);
         remarks.forEach(x => x.createTime = dateFormat(x.createTime));
+        specials.forEach(x => x.create_time = dateFormat(x.create_time));
         let result = {remarks, labels, links, specials};
         return Promise.resolve(result);
     },
