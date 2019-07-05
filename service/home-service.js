@@ -28,6 +28,7 @@ const homeService = {
         let result = {recommend: recommends, contents};
         return Promise.resolve(result);
     },
+    //右侧栏
     rightSidebar: async () => {
         //最新评论列表文章
         let remarkList = contentDao.remarkList();

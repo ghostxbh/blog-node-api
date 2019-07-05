@@ -4,16 +4,20 @@
 const remarkDao = require('../dao/remark-dao');
 const contentDao = require('../dao/contents-dao');
 module.exports = {
-    add(remark) {
+    add: async (remark) => {
         let contentId = remark.contentId;
         //评论数 +1
         contentDao.addRemarkNum(contentId);
-        return remarkDao.addRemark(remark);
+        let {affectedRows} = await remarkDao.addRemark(remark);
+        if (affectedRows > 0) {
+            return Promise.resolve(remark);
+        }
+        return null;
     },
-    del(id){
+    del(id) {
         return remarkDao.delRemark(id);
     },
-    modify(id,remark){
+    modify(id, remark) {
         remark.id = id;
         return remarkDao.modifyRemark(remark);
     },

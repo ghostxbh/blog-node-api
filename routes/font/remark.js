@@ -37,8 +37,7 @@ router.post('/create', function (req, res, next) {
     //TODO ip获取
     remark.ip = '';
     remarkService.add(remark).then(data => {
-        let {affectedRows} = data;
-        if (affectedRows > 0) res.json(result.success(affectedRows));
+        if (data) res.json(data);
         else res.json(result.failed);
     }).catch(e => res.json(result.exceptionFailed(e.message)));
 });
