@@ -16,16 +16,16 @@ const homeService = {
         let pageNum = conf.pageUtil.pageNum;
         let pageSize = conf.pageUtil.pageSize;
         //推荐文章
-        let recommend = contentDao.listByParam({recommend: 1, pageNum: 1, pageSize: 1});
+        let recommend = contentDao.listByParam({recommend: 1, pageNum: 1, pageSize: 4});
         //文章列表（时间倒序）
         let contentList = contentDao.listByParam({orderSn: 'create_time', orderUd: 'desc', pageNum, pageSize});
-        let [[[recommends]], [contentArr, [cTotal]]] = await Promise.all([recommend, contentList]);
+        let [[recommends,[rtotal]], [contentArr, [cTotal]]] = await Promise.all([recommend, contentList]);
         let contents = {pageNum, pageSize};
         contentArr.forEach(x => x.createTime = dateFormat(x.createTime));
         contents.list = contentArr;
         contents.total = cTotal.count;
         contents.totalPage = Math.ceil(cTotal.count / pageSize);
-        let result = {recommend: recommends, contents};
+        let result = {recommends, contents};
         return Promise.resolve(result);
     },
     //右侧栏
