@@ -2,7 +2,7 @@
  * Created by xbh 2019-06-12 标签CRUD
  */
 const Mysql = require('../util/mysql-util');
-let field = 'id,name,num,create_time';
+let field = 'id,name,num,create_time as createTime';
 module.exports = {
     //增
     addLabel(name) {
@@ -34,7 +34,7 @@ module.exports = {
         let sql = `select count(*) as count from b_labels where name=?`;
         return Mysql.excute(sql, [name]);
     },
-    labelAll(){
+    labelAll() {
         let sql = `select ${field} from b_labels`;
         return Mysql.excute(sql);
     },
@@ -44,7 +44,8 @@ module.exports = {
         if (orderSn) order += 'order by num desc';
         let limit = '';
         if (pageNum && pageSize) limit += `limit ${(pageNum - 1) * pageSize},${pageSize}`;
-        let sql = `select ${field} from b_labels ${order} ${limit}`;
-        return Mysql.excute(sql);
+        let sql = `select ${field} from b_labels ${order} ${limit};`;
+        let cSql = `select count(1) as count from b_labels;`;
+        return Mysql.excute(sql + cSql);
     },
 };

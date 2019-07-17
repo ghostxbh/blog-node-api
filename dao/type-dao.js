@@ -2,7 +2,7 @@
  * Created by xbh 2019-06-11 type CRUD
  */
 const Mysql = require('../util/mysql-util');
-let field = 'id,name,content_num,create_time,category_id';
+let field = 't.id,t.name,t.content_num as contentNum,t.create_time as createTime,t.category_id';
 module.exports = {
     //增
     addType(type) {
@@ -33,9 +33,12 @@ module.exports = {
         return Mysql.transExcute(sql, [id]);
     },
     //查
-    typeList() {
-        let sql = `select ${field} from b_type`;
-        return Mysql.excute(sql);
+    typeList(pageNum, pageSize) {
+        let limit = '';
+        if (pageSize && pageNum) limit = `limit ${(pageNum - 1) * pageSize},${pageSize}`;
+        let sql = `select ${field},c.name as category from b_type t left join b_category c on t.category_id=c.id order by t.create_time desc ${limit};`;
+        let cSql = `select count(1) as count from b_type;`;
+        return Mysql.excute(sql + cSql);
     },
     typeInfo(id) {
         let sql = `select ${field} from b_type where id=?`;

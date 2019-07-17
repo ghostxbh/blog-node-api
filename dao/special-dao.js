@@ -2,7 +2,7 @@
  * Created by xbh 2019-06-12 专栏CRUD
  */
 const Mysql = require('../util/mysql-util');
-let field = 'id,name,description,image,content_num,read_num,sort,create_time';
+let field = 'id,name,description,image,content_num as contentNum,read_num as readNum,sort,create_time as createTime';
 module.exports = {
     //增
     addSpecial(special) {

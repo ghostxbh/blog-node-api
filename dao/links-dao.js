@@ -2,7 +2,7 @@
  * Created by xbh 2019-06-12 友链CRUD
  */
 const Mysql = require('../util/mysql-util');
-let field = 'id,name,url,click_num,contact,remark,create_time';
+let field = 'id,name,url,click_num as clickNum,sort,status,contact,remark,create_time as createTime';
 module.exports = {
     //增
     addLink(link) {
@@ -36,9 +36,15 @@ module.exports = {
         return Mysql.transExcute(sql, [id]);
     },
     //管理列表
-    manageList() {
-        let sql = `select ${field} from b_links`;
-        return Mysql.excute(sql);
+    manageList(status, pageNum, pageSize) {
+        let where = 'where 1=1';
+        if (status) where += ` and status=${parseInt(status)}`;
+        let limit = '';
+        if (pageNum && pageSize) limit = `limit ${(pageNum - 1) * pageSize},${pageSize}`;
+        let order = 'order by create_time desc';
+        let sql = `select ${field} from b_links ${where} ${order} ${limit};`;
+        let cSql = `select count(1) as count from b_links;`;
+        return Mysql.excute(sql + cSql);
     },
     //上下架列表
     udList(status) {
