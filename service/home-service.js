@@ -19,7 +19,7 @@ const homeService = {
         let recommend = contentDao.listByParam({recommend: 1, pageNum: 1, pageSize: 4});
         //文章列表（时间倒序）
         let contentList = contentDao.listByParam({orderSn: 'create_time', orderUd: 'desc', pageNum, pageSize});
-        let [[recommends,[rtotal]], [contentArr, [cTotal]]] = await Promise.all([recommend, contentList]);
+        let [[recommends, [rtotal]], [contentArr, [cTotal]]] = await Promise.all([recommend, contentList]);
         let contents = {pageNum, pageSize};
         contentArr.forEach(x => x.createTime = dateFormat(x.createTime));
         contents.list = contentArr;
@@ -38,9 +38,10 @@ const homeService = {
         let linksList = linksDao.udList(1);
         //专栏
         let specialList = specialDao.specialList(null, 1, 5);
-        let [remarks, labels, links, specials] = await Promise.all([remarkList, labelList, linksList, specialList]);
+        let data = await Promise.all([remarkList, labelList, linksList, specialList]);
+        let [remarks, [labels, [labelTotal]], links, specials] = data;
         remarks.forEach(x => x.createTime = dateFormat(x.createTime));
-        specials.forEach(x => x.create_time = dateFormat(x.create_time));
+        specials.forEach(x => x.createTime = dateFormat(x.createTime));
         let result = {remarks, labels, links, specials};
         return Promise.resolve(result);
     },

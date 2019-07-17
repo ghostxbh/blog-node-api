@@ -2,7 +2,7 @@
  * Created by xbh 2019-06-12 评论CRUD
  */
 const Mysql = require('../util/mysql-util');
-let field = 'id,nickname,email,url,comment,ip,agent,status,create_time,content_id';
+let field = 'id,nickname,email,url,comment,ip,agent,status,create_time as createTime,content_id as contentId';
 module.exports = {
     //增
     addRemark(remark) {

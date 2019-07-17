@@ -41,12 +41,12 @@ module.exports = {
         return Mysql.excute(sql + cSql);
     },
     typeInfo(id) {
-        let sql = `select ${field} from b_type where id=?`;
+        let sql = `select ${field} from b_type t where t.id=?`;
         return Mysql.excute(sql, [id]);
     },
     //分类列表
     categoryList(categoryId) {
-        let sql = `select ${field} from b_type where category_id=?`;
+        let sql = `select ${field} from b_type t where t.category_id=?`;
         return Mysql.excute(sql, [categoryId]);
     },
 };
