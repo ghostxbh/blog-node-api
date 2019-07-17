@@ -47,7 +47,7 @@ const contentsService = {
         let specialId = content.specialId;
         if (specialId) specialDao.addRead(specialId);
         content.createTime = dateFormat(content.createTime);
-        remarks.forEach(x => x.create_time = dateFormat(x.create_time, 1));
+        remarks.forEach(x => x.createTime = dateFormat(x.createTime, 1));
         let result = {content: content || {}, remarks: remarks || []};
         return Promise.resolve(result);
     },
