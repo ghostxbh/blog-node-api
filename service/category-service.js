@@ -3,6 +3,7 @@
  */
 const categoryDao = require('../dao/category-dao');
 const typeDao = require('../dao/type-dao');
+const dataUtil = require('../util/date-util');
 const categoryService = {
     add(category) {
         return categoryDao.addCate(category);
@@ -14,8 +15,10 @@ const categoryService = {
         category.id = id;
         return categoryDao.modifyCate(category);
     },
-    list() {
-        return categoryDao.categories();
+    list: async () => {
+        let list = await categoryDao.categories();
+        list.forEach(x => x.createTime = dataUtil(x.createTime, 1));
+        return Promise.resolve(list);
     },
     treeList: async () => {
         let cateList = await categoryDao.categories();

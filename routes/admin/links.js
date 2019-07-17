@@ -112,6 +112,9 @@ router.put('/update/:id', function (req, res, next) {
  * @apiGroup links
  * @apiVersion 1.0.0
  * @apiName list
+ * @apiParam {Number} [status] 状态
+ * @apiParam {Number} [pageNum] 页码
+ * @apiParam {Number} [pageSize] 条数
  * @apiSuccessExample {json} Success-Response:
  *  HTTP/1.1 200 OK
  * {
@@ -128,8 +131,8 @@ router.put('/update/:id', function (req, res, next) {
  * @apiSampleRequest /admin/links/list
  */
 router.get('/list', function (req, res, next) {
-    let {} = req.query;
-    linksService.list().then(data => {
+    let {status, pageNum, pageSize} = req.query;
+    linksService.list(status, pageNum, pageSize).then(data => {
         if (data) res.json(result.success(data));
         else res.json(result.failed);
     }).catch(e => res.json(result.exceptionFailed(e.message)));

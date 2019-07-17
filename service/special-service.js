@@ -2,7 +2,7 @@
  * Created by xbh 2019-06-20
  */
 const specialDao = require('../dao/special-dao');
-
+const dataUtil = require('../util/date-util');
 module.exports = {
     add(special) {
         return specialDao.addSpecial(special);
@@ -14,7 +14,14 @@ module.exports = {
         special.id = id;
         return specialDao.modifySpecial(special);
     },
-    list(pageNum, pageSize) {
-        return specialDao.specialList('', pageNum, pageSize);
+    detail: async (id) => {
+        let [special] = await specialDao.special(id);
+        if (special) special.createTime = dataUtil(special.createTime, 1);
+        return Promise.resolve(special);
+    },
+    list: async (pageNum, pageSize) => {
+        let list = await specialDao.specialList('', pageNum, pageSize);
+        list.forEach(x => x.createTime = dataUtil(x.createTime, 1));
+        return Promise.resolve(list);
     },
 };

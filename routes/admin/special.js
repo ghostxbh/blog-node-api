@@ -105,6 +105,7 @@ router.put('/update/:id', function (req, res, next) {
     }).catch(e => res.json(result.exceptionFailed(e.message)));
 });
 
+
 /**
  * @api {get} /admin/special/list 获取列表
  * @apiGroup special
@@ -130,6 +131,35 @@ router.put('/update/:id', function (req, res, next) {
 router.get('/list', function (req, res, next) {
     let {pageNum, pageSize} = req.query;
     specialService.list(pageNum, pageSize).then(data => {
+        if (data) res.json(result.success(data));
+        else res.json(result.failed);
+    }).catch(e => res.json(result.exceptionFailed(e.message)));
+});
+
+/**
+ * @api {get} /admin/special/{id} 获取详情
+ * @apiGroup special
+ * @apiVersion 1.0.0
+ * @apiName info
+ * @apiParam {Number} [id] id
+ * @apiSuccessExample {json} Success-Response:
+ *  HTTP/1.1 200 OK
+ * {
+ *  "code": 200,
+ *  "message": "操作成功",
+ *  "data": {json}
+ * }
+ * @apiErrorExample {json} Error-Response:
+ *  HTTP/1.1 500 error
+ * {
+ *  "code": 500,
+ *  "message": "操作失败",
+ * }
+ * @apiSampleRequest /admin/special/:id
+ */
+router.get('/:id', function (req, res, next) {
+    let {id} = req.params;
+    specialService.detail(id).then(data => {
         if (data) res.json(result.success(data));
         else res.json(result.failed);
     }).catch(e => res.json(result.exceptionFailed(e.message)));

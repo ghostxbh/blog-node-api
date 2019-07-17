@@ -152,7 +152,8 @@ router.put('/addContentNum/:id', function (req, res, next) {
  * @apiSampleRequest /admin/type/list
  */
 router.get('/list', function (req, res, next) {
-    typeService.list().then(data => {
+    let {pageNum,pageSize} = req.query;
+    typeService.list(pageNum,pageSize).then(data => {
         if (data) res.json(result.success(data));
         else res.json(result.failed);
     }).catch(e => res.json(result.exceptionFailed(e.message)));
