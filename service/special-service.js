@@ -7,7 +7,9 @@ module.exports = {
     add(special) {
         return specialDao.addSpecial(special);
     },
-    del(id) {
+    del: async (id) => {
+        let [special] = await specialDao.special(id);
+        if (special.contentNum > 0) return Promise.resolve({affectedRows: 0});
         return specialDao.delSpecial(id);
     },
     modify(id, special) {
