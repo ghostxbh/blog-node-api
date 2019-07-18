@@ -16,7 +16,7 @@ module.exports = {
     },
     list: async (status, pageNum, pageSize) => {
         let result = {pageNum: parseInt(pageNum), pageSize: parseInt(pageSize)};
-        let [list, [total]] = await linksDao.manageList(pageNum, pageSize);
+        let [list, [total]] = await linksDao.manageList(status, pageNum, pageSize);
         result.total = total.count;
         result.totalPage = Math.ceil(total.count / pageSize);
         list.forEach(x => x.createTime = dataUtil(x.createTime, 1));

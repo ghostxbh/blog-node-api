@@ -2,7 +2,7 @@
  * Created by xbh 2019-06-11 type CRUD
  */
 const Mysql = require('../util/mysql-util');
-let field = 't.id,t.name,t.content_num as contentNum,t.create_time as createTime,t.category_id';
+let field = 't.id,t.name,t.content_num as contentNum,t.create_time as createTime,t.category_id as categoryId';
 module.exports = {
     //增
     addType(type) {
