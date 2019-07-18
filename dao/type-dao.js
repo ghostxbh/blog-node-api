@@ -46,7 +46,7 @@ module.exports = {
     },
     //分类列表
     categoryList(categoryId) {
-        let sql = `select ${field} from b_type t where t.category_id=?`;
+        let sql = `select ${field},c.name as category from b_type t left join b_category c on t.category_id=c.id where t.category_id=?`;
         return Mysql.excute(sql, [categoryId]);
     },
 };

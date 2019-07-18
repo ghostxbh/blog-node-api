@@ -20,7 +20,8 @@ const typeService = {
     addContentNum(id) {
         return typeDao.addContentNum(id);
     },
-    list: async (pageNum, pageSize) => {
+    list: async (categoryId, pageNum, pageSize) => {
+        if (categoryId) return typeService.cateList(categoryId);
         let result = {pageNum: parseInt(pageNum), pageSize: parseInt(pageSize)};
         let [[list, [total]], cateList] = await Promise.all([typeDao.typeList(pageNum, pageSize), categoryService.list()]);
         result.total = total.count;
@@ -30,8 +31,11 @@ const typeService = {
         result.cateList = cateList;
         return Promise.resolve(result);
     },
-    cateList(categoryId) {
-        return typeDao.categoryList(categoryId)
+    cateList: async (categoryId) => {
+        let [list, cateList] = await Promise.all([typeDao.categoryList(categoryId), categoryService.list()]);
+        list.forEach(x => x.createTime = dataUtil(x.createTime, 1));
+        let result = {categoryId, list, cateList};
+        return Promise.resolve(result);
     },
 };
 module.exports = typeService;
