@@ -15,7 +15,7 @@ module.exports = {
         return linksDao.modifyLink(link);
     },
     list: async (status, pageNum, pageSize) => {
-        let result = {pageNum: parseInt(pageNum), pageSize: parseInt(pageSize)};
+        let result = {status, pageNum: parseInt(pageNum), pageSize: parseInt(pageSize)};
         let [list, [total]] = await linksDao.manageList(status, pageNum, pageSize);
         result.total = total.count;
         result.totalPage = Math.ceil(total.count / pageSize);
