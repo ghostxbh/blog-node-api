@@ -1,6 +1,7 @@
 /**
  * Created by xbh 2019-06-13
  */
+const categoryService = require('../service/category-service');
 const contentsDao = require('../dao/contents-dao');
 const remarkDao = require('../dao/remark-dao');
 const labelsDao = require('../dao/labels-dao');
@@ -74,6 +75,10 @@ const contentsService = {
     //点赞 +1
     addAdmire(id) {
         return contentsDao.addAdmireNum(id);
+    },
+    addPage: async () => {
+        let [treeList, specialList] = await Promise.all([categoryService.treeList(), specialDao.specialList()]);
+        return Promise.resolve({treeList, specialList});
     },
 };
 
