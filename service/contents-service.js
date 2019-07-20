@@ -56,6 +56,7 @@ const contentsService = {
         let content = contentsDao.listByParam({keyword, typeId, specialId, labels, pageNum, pageSize, status: 1});
         let [[contentList, [total]]] = await Promise.all([content]);
         let contents = {pageNum: parseInt(pageNum), pageSize: parseInt(pageSize)};
+        contentList.forEach(x => x.createTime = dateFormat(x.createTime, 1));
         contents.list = contentList;
         contents.total = total.count;
         contents.totalPage = Math.ceil(total.count / pageSize);
