@@ -3,7 +3,8 @@
  */
 const Mysql = require('../util/mysql-util');
 const field = 'b_contents.id,b_contents.title,b_contents.introduction,' +
-    'b_contents.images,b_contents.source,b_contents.content,b_contents.read_num as readNum,' +
+    'b_contents.images,b_contents.source,b_contents.content,b_contents.content_md as contentMd,' +
+    'b_contents.read_num as readNum,' +
     'b_contents.remark_num as remarkNum,b_contents.top,b_contents.recommend,' +
     'b_contents.update_time as updataTime,b_contents.create_time as createTime,' +
     'b_contents.status,b_contents.type_id as typeId,b_contents. special_id as specialId,' +
@@ -12,11 +13,11 @@ module.exports = {
     //增
     addContent(contents) {
         let addTime = new Date();
-        let {title, introduction, images, source, content, status, typeId, specialId, labels} = contents;
+        let {title, introduction, images, source, content, contentMd, status, typeId, specialId, labels} = contents;
         let sql = 'insert into b_contents (title,introduction,images,' +
-            'source,content,create_time,status,type_id,special_id,labels)' +
-            'values(?,?,?,?,?,?,?,?,?,?)';
-        return Mysql.excute(sql, [title, introduction, images, source, content, addTime, status ? status : null, typeId ? typeId : null, specialId ? specialId : null, labels]);
+            'source,content,content_md,create_time,status,type_id,special_id,labels)' +
+            'values(?,?,?,?,?,?,?,?,?,?,?)';
+        return Mysql.excute(sql, [title, introduction, images, source, content, contentMd, addTime, status ? status : null, typeId ? typeId : null, specialId ? specialId : null, labels]);
     },
     //删
     delContent(id) {
@@ -25,13 +26,14 @@ module.exports = {
     },
     //改
     modifyContent(contents) {
-        let {id, title, introduction, images, source, content, top, recommend, status, typeId, specialId, labels} = contents;
+        let {id, title, introduction, images, source, content, contentMd, top, recommend, status, typeId, specialId, labels} = contents;
         let set = '';
         if (title) set += `title='${title}',`;
         if (introduction) set += `introduction='${introduction}',`;
         if (images) set += `images='${images}',`;
         if (source) set += `source='${source}',`;
         if (content) set += `content='${content}',`;
+        if (contentMd) set += `content_md='${contentMd}',`;
         if (top) set += `top=${top},`;
         if (recommend) set += `recommend=${recommend},`;
         if (status) set += `status=${status},`;
@@ -62,24 +64,6 @@ module.exports = {
         let sql = `select ${field},ct.name as typeName,s.name as specialName from b_contents left join b_type ct on b_contents.type_id=ct.id left join b_special s on b_contents.special_id=s.id where b_contents.id=?`;
         return Mysql.excute(sql, [id]);
     },
-    //类别列表
-    listByType(typeId, pageNum, pageSize) {
-        let where = `where c.type_id=${typeId}`;
-        let order = 'order by create_time desc';
-        let limit = `limit ${(pageNum - 1) * pageSize},${pageSize}`;
-        let sql = `select c.title,c.introduction,c.images,c.read_num as readNum,c.remark_num as remarkNum,s.name as specialName from b_contents c left join b_special s on c.special_id=s.id ${where} ${order} ${limit}`;
-        let count = `select count(*) as count from b_contents where type_id=${typeId}`;
-        return Mysql.excute(sql + count);
-    },
-    //专栏列表
-    listBySpecial(specialId, pageNum, pageSize) {
-        let where = `where c.special_id=${specialId}`;
-        let order = 'order by create_time desc';
-        let limit = `limit ${(pageNum - 1) * pageSize},${pageSize}`;
-        let sql = `select c.title,c.introduction,c.images,c.read_num as readNum,c.remark_num as remarkNum,s.name as specialName from b_contents c left join b_type ct on b_contents.type_id=ct.id ${where} ${order} ${limit}`;
-        let count = `select count(*) as count from b_contents where special_id=${specialId}`;
-        return Mysql.excute(sql + count);
-    },
     //标签、专栏、类别列表
     listByParam(param) {
         let {keyword, typeId, specialId, labels, top, recommend, status, orderSn, orderUd, pageNum, pageSize} = param;
@@ -95,7 +79,7 @@ module.exports = {
         if (orderSn && orderUd) order += `order by c.${orderSn} ${orderUd}`;
         let limit = '';
         if (pageNum && pageSize) limit += `limit ${(pageNum - 1) * pageSize},${pageSize}`;
-        let sql = `select c.id,c.title,c.introduction,c.images,c.create_time as createTime,c.read_num as readNum,c.remark_num as remarkNum,t.name as typeName from b_contents c left join b_type t on c.type_id=t.id ${where} ${order} ${limit};`;
+        let sql = `select c.id,c.title,c.introduction,c.source,c.images,c.admire_num as admireNum,c.status,c.create_time as createTime,c.read_num as readNum,c.remark_num as remarkNum,t.name as typeName from b_contents c left join b_type t on c.type_id=t.id ${where} ${order} ${limit};`;
         let count = `select count(*) as count from b_contents c ${where};`;
         return Mysql.excute(sql + count);
     },

@@ -24,9 +24,9 @@ module.exports = {
         let sql = `update b_labels set ${set} where id=${id}`;
         return Mysql.transExcute(sql);
     },
-    //+1
-    addNum(name) {
-        let sql = `update b_labels set num=num+1 where name=?`;
+    //+1 / -1
+    addNum(name, status) {
+        let sql = `update b_labels set num=num${status == 1 ? '+' : '-'}1 where name=?`;
         return Mysql.transExcute(sql, [name]);
     },
     //查数量

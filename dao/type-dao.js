@@ -27,9 +27,9 @@ module.exports = {
         let sql = `update b_type set ${set} where id=${id}`;
         return Mysql.transExcute(sql);
     },
-    //文章数+1
-    addContentNum(id) {
-        let sql = `update b_type set content_num=content_num+1 where id=?`;
+    //文章数+1 / -1
+    addContentNum(id, status) {
+        let sql = `update b_type set content_num=content_num${status == 1 ? '+' : '-'}1 where id=?`;
         return Mysql.transExcute(sql, [id]);
     },
     //查

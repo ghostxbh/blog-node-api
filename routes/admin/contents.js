@@ -172,6 +172,34 @@ router.get('/remarkList', function (req, res, next) {
 });
 
 /**
+ * @api {get} /admin/contents/{id} 文章详情
+ * @apiGroup contents
+ * @apiVersion 1.0.0
+ * @apiName info
+ * @apiParam {Number} [id] id
+ * @apiSuccessExample {json} Success-Response:
+ *  HTTP/1.1 200 OK
+ * {
+ *  "code": 200,
+ *  "message": "操作成功",
+ *  "data": {}
+ * }
+ * @apiErrorExample {json} Error-Response:
+ *  HTTP/1.1 500 error
+ * {
+ *  "code": 500,
+ *  "message": "操作失败",
+ * }
+ * @apiSampleRequest /admin/contents/:id
+ */
+router.get('/:id', function (req, res, next) {
+    contentsService.contentInfo(req.params.id).then(data => {
+        if (data) res.json(result.success(data));
+        else res.json(result.failed);
+    }).catch(e => res.json(result.exceptionFailed(e.message)));
+});
+
+/**
  * @api {get} /admin/contents/list 文章列表
  * @apiGroup contents
  * @apiVersion 1.0.0

@@ -18,7 +18,7 @@ const typeService = {
         return typeDao.modifyType(type);
     },
     addContentNum(id) {
-        return typeDao.addContentNum(id);
+        return typeDao.addContentNum(id,1);
     },
     list: async (categoryId, pageNum, pageSize) => {
         if (categoryId) return typeService.cateList(categoryId);

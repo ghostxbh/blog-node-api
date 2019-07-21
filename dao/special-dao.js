@@ -30,9 +30,9 @@ module.exports = {
         let sql = `update b_special set ${set} where id=${id}`;
         return Mysql.transExcute(sql);
     },
-    //文章数+1
-    addConten(id) {
-        let sql = `update b_special set content_num=content_num+1 where id=?`;
+    //文章数+1 / -1
+    addConten(id, status) {
+        let sql = `update b_special set content_num=content_num${status == 1 ? '+' : '-'}1 where id=?`;
         return Mysql.transExcute(sql, [id]);
     },
     //阅读+1

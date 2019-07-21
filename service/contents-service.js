@@ -22,12 +22,26 @@ const contentsService = {
             }
         }
         //type+1
-        typeDao.addContentNum(typeId);
+        typeDao.addContentNum(typeId, 1);
         //special+1
-        if (specialId) specialDao.addConten(specialId);
+        if (specialId) specialDao.addConten(specialId, 1);
         return contentsDao.addContent(content);
     },
-    del(id) {
+    del: async (id) => {
+        let [content] = await contentsDao.content(id);
+        let {labels, typeId, specialId} = content;
+        //标签减数
+        let labelList = labels.indexOf(';') > -1 ? labels.split(';') : [labels];
+        for (let i = 0; i < labelList.length; i++) {
+            let [total] = await labelsDao.labelByName(labelList[i]);
+            if (total.count < 1) {
+                labelsDao.addNum(labelList[i], 0);
+            }
+        }
+        //type-1
+        typeDao.addContentNum(typeId, 1);
+        //special-1
+        if (specialId) specialDao.addConten(specialId, 1);
         return contentsDao.delContent(id);
     },
     modify(id, content) {
@@ -80,6 +94,20 @@ const contentsService = {
     addPage: async () => {
         let [treeList, specialList] = await Promise.all([categoryService.treeList(), specialDao.specialList()]);
         return Promise.resolve({treeList, specialList});
+    },
+    contentInfo: async (id) => {
+        let ct = contentsDao.content(id);
+        let t = typeDao.typeList();
+        let cs = categoryService.treeList();
+        let s = specialDao.specialList();
+        let [[content], typeList, treeList, specialList] = await Promise.all([ct, t, cs, s]);
+        typeList.forEach(x => {
+            if (content.typeId == x.id) {
+                content.typeName = x.name;
+                content.categoryId = x.categoryId;
+            }
+        });
+        return Promise.resolve({treeList, specialList, content})
     },
 };
 
