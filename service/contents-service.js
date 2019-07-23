@@ -31,11 +31,13 @@ const contentsService = {
         let [content] = await contentsDao.content(id);
         let {labels, typeId, specialId} = content;
         //标签减数
-        let labelList = labels.indexOf(';') > -1 ? labels.split(';') : [labels];
-        for (let i = 0; i < labelList.length; i++) {
-            let [total] = await labelsDao.labelByName(labelList[i]);
-            if (total.count < 1) {
-                labelsDao.addNum(labelList[i], 0);
+        if (labels) {
+            let labelList = labels.indexOf(';') > -1 ? labels.split(';') : [labels];
+            for (let i = 0; i < labelList.length; i++) {
+                let [total] = await labelsDao.labelByName(labelList[i]);
+                if (total.count < 1) {
+                    labelsDao.addNum(labelList[i], 0);
+                }
             }
         }
         //type-1
