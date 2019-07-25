@@ -31,7 +31,7 @@ const contentService = require('../../service/contents-service');
  */
 router.get('/list', function (req, res, next) {
     let {keyword, typeId, specialId, label, pageNum, pageSize} = req.query;
-    contentService.list(keyword, typeId, specialId, label, pageNum, pageSize).then(data => {
+    contentService.list(keyword, typeId, specialId, label, pageNum, pageSize,1).then(data => {
         if (data) res.json(result.success(data));
         else res.json(result.failed);
     }).catch(e => res.json(result.exceptionFailed(e.message)));

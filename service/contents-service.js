@@ -68,8 +68,8 @@ const contentsService = {
         let result = {content: content || {}, remarks: remarks || []};
         return Promise.resolve(result);
     },
-    list: async (keyword, typeId, specialId, labels, pageNum, pageSize) => {
-        let content = contentsDao.listByParam({keyword, typeId, specialId, labels, pageNum, pageSize, status: 1});
+    list: async (keyword, typeId, specialId, labels, pageNum, pageSize,status) => {
+        let content = contentsDao.listByParam({keyword, typeId, specialId, labels, pageNum, pageSize, status});
         let [[contentList, [total]]] = await Promise.all([content]);
         let contents = {pageNum: parseInt(pageNum), pageSize: parseInt(pageSize)};
         contentList.forEach(x => x.createTime = dateFormat(x.createTime, 1));
