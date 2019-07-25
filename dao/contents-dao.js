@@ -87,7 +87,7 @@ module.exports = {
     remarkList() {
         let order = 'order by b.create_time desc';
         let limit = 'limit 5';
-        let sql = `select c.id,c.title,c.images,c.create_time as createTime,c.read_num as readNum from b_contents c left join b_remark b on c.id=b.content_id ${order} ${limit}`;
+        let sql = `select c.id,c.title,c.images,c.create_time as createTime,c.read_num as readNum from b_remark b left join b_contents c on c.id=b.content_id ${order} ${limit}`;
         return Mysql.excute(sql);
     },
 };
