@@ -18,7 +18,7 @@ module.exports = {
     },
     //改
     modifySpecial(special) {
-        let {name, description, image, contentNum, readNum, sort} = special;
+        let {id,name, description, image, contentNum, readNum, sort} = special;
         let set = '';
         if (name) set += `name='${name}',`;
         if (description) set += `description='${description}',`;
