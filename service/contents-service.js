@@ -102,7 +102,7 @@ const contentsService = {
         let t = typeDao.typeList();
         let cs = categoryService.treeList();
         let s = specialDao.specialList();
-        let [[content], typeList, treeList, specialList] = await Promise.all([ct, t, cs, s]);
+        let [[content], [typeList,[tTotal]], treeList, specialList] = await Promise.all([ct, t, cs, s]);
         typeList.forEach(x => {
             if (content.typeId == x.id) {
                 content.typeName = x.name;

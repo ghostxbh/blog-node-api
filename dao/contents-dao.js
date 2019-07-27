@@ -39,7 +39,7 @@ module.exports = {
         if (status) set += `status=${status},`;
         if (typeId) set += `type_id=${typeId},`;
         if (specialId) set += `special_id=${specialId},`;
-        if (labels) set += `labels=${labels}`;
+        if (labels) set += `labels='${labels}'`;
         if (set.substring(set.length - 1, set.length) === ',') set = set.substring(0, set.length - 1);
         let sql = `update b_contents set ${set} where id=${id}`;
         return Mysql.transExcute(sql);
