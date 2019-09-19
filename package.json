@@ -34,7 +34,7 @@
     "title": "blog-node-api",
     "description": "博客后端接口文档",
     "version": "1.0.0",
-    "url": "http://127.0.0.1:3000",
+    "url": "http://127.0.0.1:8100",
     "header": {
       "title": ""
     },
