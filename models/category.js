@@ -5,7 +5,7 @@
  */
 const {Sequelize, Model, DataTypes} = require('sequelize');
 const sequelize = require('../util/sequelize_util');
-const {INTEGER, STRING, CHAR, DATE, TEXT, NOW} = Sequelize;
+const {INTEGER, STRING, CHAR, DATE, TEXT, JSON, NOW} = Sequelize;
 
 const Category = sequelize.define('b_category', {
     id: {
@@ -38,7 +38,8 @@ const Category = sequelize.define('b_category', {
     iconUrl: {
         type: STRING(255),
         field: 'icon_url',
-        allowNull: true,
+        allowNull: false,
+        defaultValue: '',
         comment: '图标地址',
     },
     status: {
@@ -77,7 +78,8 @@ const Category = sequelize.define('b_category', {
     },
     remark: {
         type: STRING(255),
-        allowNull: true,
+        allowNull: false,
+        defaultValue: '',
         comment: '备注',
     },
     isJson: {
@@ -88,14 +90,16 @@ const Category = sequelize.define('b_category', {
         comment: '是否启用json配置',
     },
     jsonConfig: {
-        type: TEXT,
+        type: JSON,
         field: 'json_config',
-        allowNull: true,
+        allowNull: false,
+        defaultValue: {},
         comment: 'json配置',
     },
     creator: {
         type: STRING(64),
-        allowNull: true,
+        allowNull: false,
+        defaultValue: '',
         comment: '创建人',
     },
     createTime: {
@@ -106,7 +110,8 @@ const Category = sequelize.define('b_category', {
     },
     updator: {
         type: STRING(64),
-        allowNull: true,
+        allowNull: false,
+        defaultValue: '',
         comment: '修改人',
     },
     updateTime: {
@@ -129,27 +134,27 @@ const Category = sequelize.define('b_category', {
 
 module.exports = Category;
 
-const msg = [
-    {
-        title: 'Java指南',
-    },
-    {
-        title: 'NodeJs',
-    },
-    {
-        title: 'VueJs',
-    },
-    {
-        title: '程序人生',
-    },
-];
-
-msg.forEach(x => {
-    Category.sync({
-        force: false
-    }).then(() => {
-        x.createTime = new Date();
-        return Category.create(x);
-    })
-})
-
+// const msg = [
+//     {
+//         title: 'Java指南',
+//     },
+//     {
+//         title: 'NodeJs',
+//     },
+//     {
+//         title: 'VueJs',
+//     },
+//     {
+//         title: '程序人生',
+//     },
+// ];
+//
+// msg.forEach(x => {
+//     Category.sync({
+//         force: false
+//     }).then(() => {
+//         x.createTime = new Date();
+//         return Category.create(x);
+//     })
+// })
+//
