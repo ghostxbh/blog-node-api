@@ -174,124 +174,124 @@ const Docment = sequelize.define('b_docment', {
 
 module.exports = Docment;
 
-const doc = {
-    title: 'vue开发环境搭建',
-    introduction: 'vue开发环境搭建，vue项目的新建（基于命令创建）',
-    portrait: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1564033535573&di=f62ef3aa43f99b26d1946a7547975208&imgtype=0&src=http%3A%2F%2Fimage.devopen.club%2Fcover_fix_1500_900.jpg%3FimageView2%2F2%2Fw%2F1500%2Finterlace%2F1%2Fq%2F100',
-    content: `<h2 id="h2-vue-"><a name="vue开发环境搭建(官方推荐命令)" class="reference-link"></a><span class="header-link octicon octicon-link"></span>vue开发环境搭建(官方推荐命令)</h2><p>必须有<strong>node</strong>环境</p>
-                <pre><code>npm install -global vue-cli / cnpm install -global vue-cli
-                </code></pre><pre><code>#创建
-                vue init webpack vuedemo
-                #进入项目路径
-                cd vuedemo
-                #安装依赖
-                npm install / cnpm install
-                #启动
-                npm run dev
-                </code></pre><blockquote>
-                <p>2.创建&amp;启动项目（webpack-simple创建）</p>
-                </blockquote>
-                <pre><code>#创建
-                vue init webpack-simple vuedemo
-                #进入项目路径
-                cd vuedemo
-                #安装依赖
-                npm install / cnpm install
-                #启动
-                npm run dev
-                </code></pre><h3 id="h3-vue-cli-2-x-3-x"><a name="vue-cli 2.X升级3.X" class="reference-link"></a><span class="header-link octicon octicon-link"></span>vue-cli 2.X升级3.X</h3><blockquote>
-                <p>1.<strong>升级3.X之前需要卸载2.X</strong></p>
-                </blockquote>
-                <pre><code>npm uninstall -global vue-cli
-                </code></pre><blockquote>
-                <p>2.安装vue-cli 3.X(以下3种命令都可以安装)</p>
-                </blockquote>
-                <pre><code>npm install -g @vue/cli 
-                cnpm install -g @vue/cli 
-                yarn global add @vue/cli
-                </code></pre><blockquote>
-                <p>3.创建&amp;启动项目</p>
-                </blockquote>
-                <pre><code>#创建项目
-                vue create vuedome01
-                #进入项目路径
-                cd vuedemo01
-                #启动项目
-                npm run serve
-                #编译项目
-                npm run build
-                </code></pre><h4 id="h4-ps-cnpm-"><a name="PS：cnpm的安装(淘宝镜像)" class="reference-link"></a><span class="header-link octicon octicon-link"></span>PS：cnpm的安装(淘宝镜像)</h4>`,
-    contentMD: `## vue开发环境搭建(官方推荐命令)
-                必须有**node**环境
-                
-                \`\`\`
-                npm install -global vue-cli / cnpm install -global vue-cli
-                \`\`\`
-                
-                \`\`\`
-                #创建
-                vue init webpack vuedemo
-                #进入项目路径
-                cd vuedemo
-                #安装依赖
-                npm install / cnpm install
-                #启动
-                npm run dev
-                \`\`\`
-                
-                > 2.创建&启动项目（webpack-simple创建）
-                
-                \`\`\`
-                #创建
-                vue init webpack-simple vuedemo
-                #进入项目路径
-                cd vuedemo
-                #安装依赖
-                npm install / cnpm install
-                #启动
-                npm run dev
-                \`\`\`
-                ### vue-cli 2.X升级3.X
-                
-                > 1.**升级3.X之前需要卸载2.X**
-                
-                \`\`\`
-                npm uninstall -global vue-cli
-                \`\`\`
-                
-                > 2.安装vue-cli 3.X(以下3种命令都可以安装)
-                
-                \`\`\`
-                npm install -g @vue/cli 
-                cnpm install -g @vue/cli 
-                yarn global add @vue/cli
-                \`\`\`
-                
-                > 3.创建&启动项目
-                
-                \`\`\`
-                #创建项目
-                vue create vuedome01
-                #进入项目路径
-                cd vuedemo01
-                #启动项目
-                npm run serve
-                #编译项目
-                npm run build
-                \`\`\`
-                
-                #### PS：cnpm的安装(淘宝镜像)`,
-    readNum: 15,
-    isCommon: '1',
-    commonNum: 2,
-    supportNum: 50,
-    labels: 'vue;vue-cli;',
-    createTime: new Date(),
-
-};
-
-Docment.sync({
-    force: false
-}).then(() => {
-    return Docment.create(doc);
-})
+// const doc = {
+//     title: 'vue开发环境搭建',
+//     introduction: 'vue开发环境搭建，vue项目的新建（基于命令创建）',
+//     portrait: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1564033535573&di=f62ef3aa43f99b26d1946a7547975208&imgtype=0&src=http%3A%2F%2Fimage.devopen.club%2Fcover_fix_1500_900.jpg%3FimageView2%2F2%2Fw%2F1500%2Finterlace%2F1%2Fq%2F100',
+//     content: `<h2 id="h2-vue-"><a name="vue开发环境搭建(官方推荐命令)" class="reference-link"></a><span class="header-link octicon octicon-link"></span>vue开发环境搭建(官方推荐命令)</h2><p>必须有<strong>node</strong>环境</p>
+//                 <pre><code>npm install -global vue-cli / cnpm install -global vue-cli
+//                 </code></pre><pre><code>#创建
+//                 vue init webpack vuedemo
+//                 #进入项目路径
+//                 cd vuedemo
+//                 #安装依赖
+//                 npm install / cnpm install
+//                 #启动
+//                 npm run dev
+//                 </code></pre><blockquote>
+//                 <p>2.创建&amp;启动项目（webpack-simple创建）</p>
+//                 </blockquote>
+//                 <pre><code>#创建
+//                 vue init webpack-simple vuedemo
+//                 #进入项目路径
+//                 cd vuedemo
+//                 #安装依赖
+//                 npm install / cnpm install
+//                 #启动
+//                 npm run dev
+//                 </code></pre><h3 id="h3-vue-cli-2-x-3-x"><a name="vue-cli 2.X升级3.X" class="reference-link"></a><span class="header-link octicon octicon-link"></span>vue-cli 2.X升级3.X</h3><blockquote>
+//                 <p>1.<strong>升级3.X之前需要卸载2.X</strong></p>
+//                 </blockquote>
+//                 <pre><code>npm uninstall -global vue-cli
+//                 </code></pre><blockquote>
+//                 <p>2.安装vue-cli 3.X(以下3种命令都可以安装)</p>
+//                 </blockquote>
+//                 <pre><code>npm install -g @vue/cli
+//                 cnpm install -g @vue/cli
+//                 yarn global add @vue/cli
+//                 </code></pre><blockquote>
+//                 <p>3.创建&amp;启动项目</p>
+//                 </blockquote>
+//                 <pre><code>#创建项目
+//                 vue create vuedome01
+//                 #进入项目路径
+//                 cd vuedemo01
+//                 #启动项目
+//                 npm run serve
+//                 #编译项目
+//                 npm run build
+//                 </code></pre><h4 id="h4-ps-cnpm-"><a name="PS：cnpm的安装(淘宝镜像)" class="reference-link"></a><span class="header-link octicon octicon-link"></span>PS：cnpm的安装(淘宝镜像)</h4>`,
+//     contentMD: `## vue开发环境搭建(官方推荐命令)
+//                 必须有**node**环境
+//
+//                 \`\`\`
+//                 npm install -global vue-cli / cnpm install -global vue-cli
+//                 \`\`\`
+//
+//                 \`\`\`
+//                 #创建
+//                 vue init webpack vuedemo
+//                 #进入项目路径
+//                 cd vuedemo
+//                 #安装依赖
+//                 npm install / cnpm install
+//                 #启动
+//                 npm run dev
+//                 \`\`\`
+//
+//                 > 2.创建&启动项目（webpack-simple创建）
+//
+//                 \`\`\`
+//                 #创建
+//                 vue init webpack-simple vuedemo
+//                 #进入项目路径
+//                 cd vuedemo
+//                 #安装依赖
+//                 npm install / cnpm install
+//                 #启动
+//                 npm run dev
+//                 \`\`\`
+//                 ### vue-cli 2.X升级3.X
+//
+//                 > 1.**升级3.X之前需要卸载2.X**
+//
+//                 \`\`\`
+//                 npm uninstall -global vue-cli
+//                 \`\`\`
+//
+//                 > 2.安装vue-cli 3.X(以下3种命令都可以安装)
+//
+//                 \`\`\`
+//                 npm install -g @vue/cli
+//                 cnpm install -g @vue/cli
+//                 yarn global add @vue/cli
+//                 \`\`\`
+//
+//                 > 3.创建&启动项目
+//
+//                 \`\`\`
+//                 #创建项目
+//                 vue create vuedome01
+//                 #进入项目路径
+//                 cd vuedemo01
+//                 #启动项目
+//                 npm run serve
+//                 #编译项目
+//                 npm run build
+//                 \`\`\`
+//
+//                 #### PS：cnpm的安装(淘宝镜像)`,
+//     readNum: 15,
+//     isCommon: '1',
+//     commonNum: 2,
+//     supportNum: 50,
+//     labels: 'vue;vue-cli;',
+//     createTime: new Date(),
+//
+// };
+//
+// Docment.sync({
+//     force: false
+// }).then(() => {
+//     return Docment.create(doc);
+// })
