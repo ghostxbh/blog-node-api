@@ -22,7 +22,10 @@ const resultlt_data = {code: 0, message: ''};
  * @return {{code, message}&{data: *}}
  */
 function success(data) {
-    let result = {...resultlt_data, data};
+    let result = {};
+    if (data) {
+        result = {...resultlt_data, data};
+    }
     result.code = SUCCESS;
     result.message = '操作成功';
     return result;

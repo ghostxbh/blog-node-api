@@ -2,7 +2,7 @@
  * Created by xbh 2019-06-11 mysql连接
  */
 
-const mysql = require('mysql');
+const mysql = require('mysql2');
 const conf = require('../conf/mysql-connection');
 
 const config = {
