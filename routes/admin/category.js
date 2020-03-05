@@ -4,6 +4,7 @@
 var express = require('express');
 var router = express.Router();
 const result = require('../../util/result-util');
+const {category} = require('../../models/index');
 const categoryService = require('../../service/category-service');
 
 /**
@@ -11,7 +12,21 @@ const categoryService = require('../../service/category-service');
  * @apiGroup category
  * @apiVersion 1.0.0
  * @apiName create
- * @apiParam {String} [name] 名称
+ * @apiParam {String} [title] 标题
+ * @apiParam {String} [sourceType] 来源类型
+ * @apiParam {String} [docType] 文档类型
+ * @apiParam {String} [iconUrl] 图标地址
+ * @apiParam {String} [status] 状态
+ * @apiParam {String} [isEnable] 是否启用
+ * @apiParam {String} [priority] 等级
+ * @apiParam {Number} [lastMaster] 上级
+ * @apiParam {Number} [fieldSort] 排序
+ * @apiParam {String} [remark] 备注
+ * @apiParam {String} [isJson] 是否启用json配置
+ * @apiParam {String} [jsonConfig] json配置
+ * @apiParam {String} [jsonConfig] json配置
+ * @apiParam {String} [creator] 创建人
+ * @apiParam {String} [updator] 修改人
  * @apiSuccessExample {json} Success-Response:
  *  HTTP/1.1 200 OK
  * {
@@ -27,13 +42,16 @@ const categoryService = require('../../service/category-service');
  * }
  * @apiSampleRequest /admin/category/create
  */
-router.post('/create', function (req, res, next) {
-    let category = req.body;
-    categoryService.add(category).then(data => {
-        let {affectedRows} = data;
-        if (affectedRows > 0) res.json(result.success(affectedRows));
-        else res.json(result.failed);
-    }).catch(e => res.json(result.exceptionFailed(e.message)));
+router.post('/create', async function (req, res, next) {
+    const data = req.body;
+    data.createTime = new Date();
+    try {
+        await category.create(data);
+        return res.json(result.success(null));
+    } catch (e) {
+        console.log(e);
+        return res.json(result.exceptionFailed(e.message));
+    }
 });
 
 /**
